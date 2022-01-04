@@ -118,21 +118,21 @@ mse_lm
 
 $y,X$の間に$y=f(X)+\epsilon$という関係があると仮定する($\epsilon$は平均$0$, 分散$\sigma^2$の誤差)．データ$D$から$f(X)$を近似する$\hat{f}(X; D)$というモデルを構築して新たな$X$から$y$を予測する．このとき予測誤差の期待値はBias($Bias_D(.)^2$)とVariance($Var_{D}(.)$), Noise($\sigma^2$)に分解できる．
 
-```{=latex}
-\begin{align}
+$$
+\begin{align*}
   E_{D, \epsilon }\left[(y - \hat{f}(X ; D))^2 \right] &= \left[ Bias_{D} ( \hat{f} (X ; D) ) \right]^2 +  Var_{D} \left[ \hat{f} (X ; D) \right] + \sigma^2
-\end{align}
-```
+\end{align*}
+$$
 
 ここで，
-```{=latex}
-\begin{align}
+$$
+\begin{align*}
   Bias_{D} ( \hat{f} (X ; D) ) 
   &= E_{D}(\hat{f}(X;D)) - f(X) \\
   Var_{D} \left[ \hat{f} (X ; D) \right]
   &= E_{D} \left[ ( E_{D}[\hat{f}(X; D)] - \hat{f}(X; D) )^2 \right].
-\end{align}
-```
+\end{align*}
+$$
 
 学習に使用したデータとは別のinputから予測する場合は，モデルを複雑化するとBiasは縮小する一方でVarianceが拡大するトレードオフの関係がある．
 
@@ -140,13 +140,13 @@ $y,X$の間に$y=f(X)+\epsilon$という関係があると仮定する($\epsilon
 ### 2-2. Ridge回帰・Lasso回帰
 
 OLSは「誤差の2乗和」を最小化するのに対し，Ridge回帰 (Lasso回帰)では「誤差にパラメータの2乗(絶対値)を加えた値」を最小化する．パラメータの2乗(絶対値)はモデルの複雑さに対する罰則(penalty)である．
-```{=latex}
-\begin{align}
+$$
+\begin{align*}
   OLS &: \min_{\beta} \  (y - X \beta)^{T}(y - X \beta) \\
   Ridge &: \min_{\beta} \  (y - X \beta)^{T}(y - X \beta) + \lambda \beta^{T}\beta \\
   Lasso &: \min_{\beta} \  (y - X \beta)^{T}(y - X \beta) + \lambda || \beta ||_1
-\end{align}
-```
+\end{align*}
+$$
 
 ここでハイパーパラメータ$\lambda$は交差検証(後述)によって予測誤差を最小化する値にチューニングされる．
 

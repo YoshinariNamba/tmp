@@ -143,7 +143,33 @@ mse_lm
 分散![\\sigma^2](https://latex.codecogs.com/png.latex?%5Csigma%5E2 "\sigma^2")の誤差)．データ![D](https://latex.codecogs.com/png.latex?D "D")から![f(X)](https://latex.codecogs.com/png.latex?f%28X%29 "f(X)")を近似する![\\hat{f}(X; D)](https://latex.codecogs.com/png.latex?%5Chat%7Bf%7D%28X%3B%20D%29 "\hat{f}(X; D)")というモデルを構築して新たな![X](https://latex.codecogs.com/png.latex?X "X")から![y](https://latex.codecogs.com/png.latex?y "y")を予測する．このとき予測誤差の期待値はBias(![Bias_D(.)^2](https://latex.codecogs.com/png.latex?Bias_D%28.%29%5E2 "Bias_D(.)^2"))とVariance(![Var\_{D}(.)](https://latex.codecogs.com/png.latex?Var_%7BD%7D%28.%29 "Var_{D}(.)")),
 Noise(![\\sigma^2](https://latex.codecogs.com/png.latex?%5Csigma%5E2 "\sigma^2"))に分解できる．
 
+![
+\\begin{align\*}
+  E\_{D, \\epsilon }\\left\[(y - \\hat{f}(X ; D))^2 \\right\] &= \\left\[ Bias\_{D} ( \\hat{f} (X ; D) ) \\right\]^2 +  Var\_{D} \\left\[ \\hat{f} (X ; D) \\right\] + \\sigma^2
+\\end{align\*}
+](https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Balign%2A%7D%0A%20%20E_%7BD%2C%20%5Cepsilon%20%7D%5Cleft%5B%28y%20-%20%5Chat%7Bf%7D%28X%20%3B%20D%29%29%5E2%20%5Cright%5D%20%26%3D%20%5Cleft%5B%20Bias_%7BD%7D%20%28%20%5Chat%7Bf%7D%20%28X%20%3B%20D%29%20%29%20%5Cright%5D%5E2%20%2B%20%20Var_%7BD%7D%20%5Cleft%5B%20%5Chat%7Bf%7D%20%28X%20%3B%20D%29%20%5Cright%5D%20%2B%20%5Csigma%5E2%0A%5Cend%7Balign%2A%7D%0A "
+\begin{align*}
+  E_{D, \epsilon }\left[(y - \hat{f}(X ; D))^2 \right] &= \left[ Bias_{D} ( \hat{f} (X ; D) ) \right]^2 +  Var_{D} \left[ \hat{f} (X ; D) \right] + \sigma^2
+\end{align*}
+")
+
 ここで，
+
+![
+\\begin{align\*}
+  Bias\_{D} ( \\hat{f} (X ; D) ) 
+  &= E\_{D}(\\hat{f}(X;D)) - f(X) \\\\
+  Var\_{D} \\left\[ \\hat{f} (X ; D) \\right\]
+  &= E\_{D} \\left\[ ( E\_{D}\[\\hat{f}(X; D)\] - \\hat{f}(X; D) )^2 \\right\].
+\\end{align\*}
+](https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Balign%2A%7D%0A%20%20Bias_%7BD%7D%20%28%20%5Chat%7Bf%7D%20%28X%20%3B%20D%29%20%29%20%0A%20%20%26%3D%20E_%7BD%7D%28%5Chat%7Bf%7D%28X%3BD%29%29%20-%20f%28X%29%20%5C%5C%0A%20%20Var_%7BD%7D%20%5Cleft%5B%20%5Chat%7Bf%7D%20%28X%20%3B%20D%29%20%5Cright%5D%0A%20%20%26%3D%20E_%7BD%7D%20%5Cleft%5B%20%28%20E_%7BD%7D%5B%5Chat%7Bf%7D%28X%3B%20D%29%5D%20-%20%5Chat%7Bf%7D%28X%3B%20D%29%20%29%5E2%20%5Cright%5D.%0A%5Cend%7Balign%2A%7D%0A "
+\begin{align*}
+  Bias_{D} ( \hat{f} (X ; D) ) 
+  &= E_{D}(\hat{f}(X;D)) - f(X) \\
+  Var_{D} \left[ \hat{f} (X ; D) \right]
+  &= E_{D} \left[ ( E_{D}[\hat{f}(X; D)] - \hat{f}(X; D) )^2 \right].
+\end{align*}
+")
 
 学習に使用したデータとは別のinputから予測する場合は，モデルを複雑化するとBiasは縮小する一方でVarianceが拡大するトレードオフの関係がある．
 
@@ -151,6 +177,20 @@ Noise(![\\sigma^2](https://latex.codecogs.com/png.latex?%5Csigma%5E2 "\sigma^2")
 
 OLSは「誤差の2乗和」を最小化するのに対し，Ridge回帰
 (Lasso回帰)では「誤差にパラメータの2乗(絶対値)を加えた値」を最小化する．パラメータの2乗(絶対値)はモデルの複雑さに対する罰則(penalty)である．
+
+![
+\\begin{align\*}
+  OLS &: \\min\_{\\beta} \\  (y - X \\beta)^{T}(y - X \\beta) \\\\
+  Ridge &: \\min\_{\\beta} \\  (y - X \\beta)^{T}(y - X \\beta) + \\lambda \\beta^{T}\\beta \\\\
+  Lasso &: \\min\_{\\beta} \\  (y - X \\beta)^{T}(y - X \\beta) + \\lambda \|\| \\beta \|\|\_1
+\\end{align\*}
+](https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Balign%2A%7D%0A%20%20OLS%20%26%3A%20%5Cmin_%7B%5Cbeta%7D%20%5C%20%20%28y%20-%20X%20%5Cbeta%29%5E%7BT%7D%28y%20-%20X%20%5Cbeta%29%20%5C%5C%0A%20%20Ridge%20%26%3A%20%5Cmin_%7B%5Cbeta%7D%20%5C%20%20%28y%20-%20X%20%5Cbeta%29%5E%7BT%7D%28y%20-%20X%20%5Cbeta%29%20%2B%20%5Clambda%20%5Cbeta%5E%7BT%7D%5Cbeta%20%5C%5C%0A%20%20Lasso%20%26%3A%20%5Cmin_%7B%5Cbeta%7D%20%5C%20%20%28y%20-%20X%20%5Cbeta%29%5E%7BT%7D%28y%20-%20X%20%5Cbeta%29%20%2B%20%5Clambda%20%7C%7C%20%5Cbeta%20%7C%7C_1%0A%5Cend%7Balign%2A%7D%0A "
+\begin{align*}
+  OLS &: \min_{\beta} \  (y - X \beta)^{T}(y - X \beta) \\
+  Ridge &: \min_{\beta} \  (y - X \beta)^{T}(y - X \beta) + \lambda \beta^{T}\beta \\
+  Lasso &: \min_{\beta} \  (y - X \beta)^{T}(y - X \beta) + \lambda || \beta ||_1
+\end{align*}
+")
 
 ここでハイパーパラメータ![\\lambda](https://latex.codecogs.com/png.latex?%5Clambda "\lambda")は交差検証(後述)によって予測誤差を最小化する値にチューニングされる．
 
